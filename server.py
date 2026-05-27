@@ -1,3 +1,7 @@
+"""
+Server module for the Emotion Detection application.
+Provides routes to render the user interface and process emotion analysis requests.
+"""
 from flask import Flask, render_template, request
 from EmotionDetection.emotion_detection import emotion_detector
 
@@ -11,11 +15,11 @@ def emot_detector():
     """
     text_to_analyze = request.args.get('textToAnalyze')
     response = emotion_detector(text_to_analyze)
-    
+
     # Verificar si la emoción dominante es None (caso de error 400)
     if response['dominant_emotion'] is None:
         return "Invalid text! Please try again!"
-        
+
     # Extraer los datos si la respuesta es válida
     anger = response['anger']
     disgust = response['disgust']
@@ -23,7 +27,7 @@ def emot_detector():
     joy = response['joy']
     sadness = response['sadness']
     dominant_emotion = response['dominant_emotion']
-    
+
     return (
         f"For the given statement, the system response is 'anger': {anger}, "
         f"'disgust': {disgust}, 'fear': {fear}, 'joy': {joy} and 'sadness': {sadness}. "
